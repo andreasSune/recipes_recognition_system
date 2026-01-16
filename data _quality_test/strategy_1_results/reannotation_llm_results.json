@@ -1,0 +1,47 @@
+{
+  "results": [
+    {
+      "id": "01019e8045",
+      "title": "'V' Fruity red cabbage",
+      "actions_llm_nouveau": [
+        "core",
+        "cut",
+        "heat",
+        "add",
+        "cook",
+        "add",
+        "cook",
+        "stir",
+        "idle"
+      ],
+      "success": true
+    },
+    {
+      "id": "003b7b356b",
+      "title": "* Easy Simple Marinated Grilled Chicken. *",
+      "actions_llm_nouveau": [
+        "add",
+        "mince",
+        "mix",
+        "add",
+        "reseal",
+        "put",
+        "refrigerate",
+        "grill",
+        "flip",
+        "heat",
+        "oil",
+        "remove",
+        "shake",
+        "discard",
+        "grill",
+        "grill"
+      ],
+      "success": true
+    }
+  ],
+  "failed_recipes": [],
+  "total_processed": 2,
+  "total_success": 2,
+  "total_failed": 0
+}

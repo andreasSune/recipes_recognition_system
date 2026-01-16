@@ -1,0 +1,190 @@
+{
+  "total_graphs_analyzed": 2749491,
+  "graphs_with_violations": 1087201,
+  "violation_rate": 39.541900664523,
+  "total_type_a_violations": 246373,
+  "total_type_b_violations": 887098,
+  "total_repetitions": 99,
+  "total_unknown_verbs": 84,
+  "unknown_verbs_list": [
+    "",
+    "acidulate",
+    "alternate",
+    "batten",
+    "blow",
+    "bruise",
+    "brulee",
+    "bung",
+    "burst",
+    "carbonate",
+    "chuck",
+    "color",
+    "cram",
+    "crank",
+    "cross",
+    "crumple",
+    "crust",
+    "darken",
+    "dash",
+    "decrease",
+    "devil",
+    "dilute",
+    "dip",
+    "disjoint",
+    "dispense",
+    "double",
+    "draw",
+    "feed",
+    "finger",
+    "flavor",
+    "flay",
+    "float",
+    "fork",
+    "frappe",
+    "freshen",
+    "fricassee",
+    "hammer",
+    "handle",
+    "harvest",
+    "hop",
+    "husk",
+    "marbleize",
+    "measure",
+    "mop",
+    "neaten",
+    "nip",
+    "nudge",
+    "pack",
+    "pad",
+    "pat",
+    "piece",
+    "pip",
+    "pipe",
+    "pique",
+    "pitch",
+    "pocket",
+    "pouch",
+    "prep",
+    "prepare",
+    "pressurize",
+    "pulverize",
+    "quench",
+    "reconstitute",
+    "ripple",
+    "scrunch",
+    "seam",
+    "segment",
+    "sliver",
+    "souse",
+    "spear",
+    "spike",
+    "spit",
+    "sprout",
+    "stiffen",
+    "stretch",
+    "strip",
+    "stud",
+    "sweep",
+    "sweeten",
+    "swizzle",
+    "taste",
+    "vein",
+    "weigh",
+    "whiten"
+  ],
+  "type_a_by_rule": {
+    "A2_IRREVERSIBILITE_PHYSIQUE": 202946,
+    "A3_ILLOGISME_FINITION_MELANGE": 23842,
+    "A4_ILLOGISME_FINITION_CUISSON": 17774,
+    "A1_IRREVERSIBILITE_TEMPORELLE": 1811
+  },
+  "type_b_by_rule": {
+    "B2_ORDRE_INVERSE": 293862,
+    "B4_MELANGE_APRES_CUISSON_PASSIVE": 592284,
+    "B1_SAUT_DE_PHASE": 952
+  },
+  "top_10_type_a": [
+    [
+      "bake → cut",
+      18911
+    ],
+    [
+      "simmer → puree",
+      8889
+    ],
+    [
+      "serve → mix",
+      8227
+    ],
+    [
+      "cook → cut",
+      8171
+    ],
+    [
+      "cook → chop",
+      6476
+    ],
+    [
+      "bake → slice",
+      6426
+    ],
+    [
+      "turn → cut",
+      5762
+    ],
+    [
+      "cook → slice",
+      5286
+    ],
+    [
+      "grill → cut",
+      4391
+    ],
+    [
+      "boil → cut",
+      4025
+    ]
+  ],
+  "top_10_type_b": [
+    [
+      "cook → stir",
+      211531
+    ],
+    [
+      "simmer → stir",
+      88730
+    ],
+    [
+      "boil → stir",
+      41529
+    ],
+    [
+      "cook → mix",
+      33362
+    ],
+    [
+      "bake → mix",
+      29562
+    ],
+    [
+      "add → puree",
+      22342
+    ],
+    [
+      "simmer → mix",
+      19370
+    ],
+    [
+      "bake → stir",
+      18033
+    ],
+    [
+      "place → cut",
+      16572
+    ],
+    [
+      "microwave → stir",
+      13175
+    ]
+  ]
+}
