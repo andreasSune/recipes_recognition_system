@@ -8,6 +8,7 @@ adjust
 aerate
 age
 agitate
+air dry
 air fry
 alternate
 amalgamate
@@ -20,9 +21,8 @@ autolyse
 bag
 baggie
 bake
-bar
 barbecue
-bast
+baste
 bathe
 batten
 batter
@@ -37,14 +37,12 @@ blast
 blaze
 blend
 blenderize
-blind bake
 blister
 blitz
 blob
 blot
 blow
 boil
-bok
 bone
 braid
 braise
@@ -79,18 +77,17 @@ center
 char
 chiffonade
 chill
-chink
 chip
 chisel
-choke
 chop
 chuck
 chunk
 churn
+churn freeze
 clarify
 claw
 clean
-clear
+cleanse
 cleave
 clip
 clump
@@ -101,18 +98,16 @@ coddle
 coil
 color
 combine
+compress
 concasse
-concoct
 condense
 confit
 congeal
 convert
 cook
-cooks
 cool
 core
 cork
-corner
 cover
 crack
 crackle
@@ -120,7 +115,7 @@ cradle
 cram
 crank
 cream
-create
+crease
 crimp
 crinkle
 crisp
@@ -128,19 +123,15 @@ cross
 crosscut
 crosshatch
 crumb
-crumble
-crumple
 crunch
 crush
 crust
 crystallize
 cube
-cucumber
 culture
 curdle
 cure
 curl
-curry
 curve
 cut
 dab
@@ -148,31 +139,32 @@ damp
 dampen
 darken
 dash
+debone
 decant
 declump
 decorate
 decrease
 deep fry
-deepen
 defrost
 degas
-deglaze
 degrease
 dehydrate
+deseed
 devein
 devil
 diagonal
 dice
 dilute
 dip
-disassemble
 discard
 discharge
+dish
 disjoint
 dispense
+dispose
 dissolve
 distill
-divide
+ditch
 dock
 dollop
 dome
@@ -188,10 +180,10 @@ dress
 dribble
 drip
 drizzle
+droast
 drop
 drown
 dry
-dry roast
 dump
 dunk
 dust
@@ -199,6 +191,8 @@ egg
 egg wash
 emulsify
 encapsulate
+encase
+enclose
 encrust
 enfold
 enrich
@@ -206,10 +200,10 @@ enrobe
 evaporate
 even
 eviscerate
-export
 extract
 extrude
 fan
+fasten
 feather
 feed
 ferment
@@ -218,6 +212,7 @@ fill
 fillet
 film
 filter
+finely
 finger
 finish
 fire
@@ -227,10 +222,11 @@ flake
 flambe
 flame
 flash
+flash freeze
+flash fry
 flatten
 flavor
 flay
-flesh
 flip
 float
 flour
@@ -248,21 +244,16 @@ freezer
 freshen
 fricassee
 fringe
-frisee
 frizzle
 frost
 froth
 fry
 funnel
-garnish
 gash
 gather
 gel
-gentle
 gill
-glass
 glaze
-graham
 grate
 gratinee
 grease
@@ -275,34 +266,31 @@ halve
 hammer
 handle
 hang
+hard boil
 harden
 harvest
 head
 heat
-hide
 hop
 husk
 incision
 incline
 inoculate
-insulate
 interlace
 interleave
-julienne
 laminate
 layer
 leach
 lean
 leave
 leaven
-mace
-macerate
-maintain
+level
+level off
+liquidise
 marbleize
 marinate
 mark
 marry
-marzipan
 mash
 massage
 mature
@@ -353,7 +341,9 @@ parbake
 parboil
 parch
 parcook
+pare
 pasteurize
+patting
 peel
 percolate
 perk
@@ -373,7 +363,6 @@ plate
 pleat
 plonk
 plop
-plum
 plunk
 poach
 pocket
@@ -381,46 +370,74 @@ portion
 pouch
 pound
 pour
+pour off
+pour out
+powder
 powderize
 prebake
 prechop
 precook
-preheat
 premeasure
 premix
 prep
-prepare
-preseason
-preserve
-presoak
 press
+pressing
 pressure cook
 pressurize
-prewarm
-prickle
 process
 proof
 puddle
 pulsate
 pulse
 pulverise
+punch down
 puree
+purée
+put
 quarter
 quench
 quenelle
+rain
+reabsorb
+readjust
+rearrange
+reassemble
+reblend
+reboil
+rebottle
+recoat
+recombine
 reconstitute
-redraw
 reduce
+refill
+reform
+refreeze
 refresh
 refrigerate
+refry
+reglaze
 reheat
 rehydrate
+reincorporate
+reintroduce
 remash
+remelt
 remove
+reopen
+reposition
+reprocess
+reroll
+reseal
+reseason
+reset
 rest
 restore
 retrieve
 return
+rewarm
+rewhisk
+rework
+rewrap
 ridge
 rim
 rinse
@@ -438,7 +455,6 @@ round
 sandwich
 saute
 scald
-scallop
 scoop
 scorch
 score
@@ -446,22 +462,20 @@ scramble
 scrape
 scrub
 scrunch
-scuff
 scum
 seal
 seam
 sear
 season
 seat
+secure
 seed
 seep
-segment
 separate
 serve
 set
 settle
 shake
-shallow
 shallow fry
 shape
 sharpen
@@ -469,7 +483,6 @@ shave
 shear
 shell
 shimmer
-shorten
 shred
 shrink
 shuck
@@ -483,11 +496,13 @@ skewer
 skim
 skin
 slash
+slather
 slice
 slide
 slit
 sliver
 slow cook
+slow roast
 smash
 smear
 smoke
@@ -511,9 +526,10 @@ spill
 spiral
 spiralize
 spit
+spit roast
 splash
 splat
-splatter
+split
 splitter
 splodge
 sploosh
@@ -521,7 +537,6 @@ splotch
 spool
 spray
 spread
-sprinkle
 spritz
 sprout
 square
@@ -540,7 +555,7 @@ stir fry
 stone
 straighten
 strain
-strand
+stream
 stretch
 string
 strip
@@ -555,32 +570,27 @@ swell
 swirl
 swish
 swizzle
-tap
+take off
 taper
 taste
 tear
 temper
 tenderize
 tent
-test
 texturize
 thaw
-thicken
 thin
 thread
+throw away
 tilt
 tip
 tip out
 tipping
 toast
-tong
-tons
 top
 torch
-tortillas
 toss
 tournee
-transfer
 transform
 trickle
 trim
@@ -588,6 +598,7 @@ trisect
 truss
 tuck
 turn
+turn off
 twine
 twirl
 twist
@@ -596,6 +607,7 @@ uncurl
 underbake
 undercook
 unfoil
+unfold
 unfurl
 unglaze
 ungrease
@@ -612,14 +624,11 @@ untruss
 untwist
 unwind
 unwrap
-vacuum seal
 vein
 warm
 wash
-wax
 weave
 wedge
-wedge slice
 weigh
 wet
 whip
@@ -629,6 +638,5 @@ whiz
 whizz
 wilt
 wipe
-won
 wrap
 wrapper

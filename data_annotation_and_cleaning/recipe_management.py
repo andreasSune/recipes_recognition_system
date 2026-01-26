@@ -1708,61 +1708,6 @@ def reprocess_failed_recipes(cohort, api_key, model_name, batch_size=5, max_retr
     return results
 
 
-# ================================ FONCTION DE POST-TRAITEMENT ================================
-
-def filter_actions(actions_str):
-    """
-    Fonction pour filtrer les actions en supprimant les verbes non gestuels
-    """
-    cooking_verbs_no_gesture = ['Age', 'Air fry', 'BBQ', 'Bake', 'Barbecue', 'Blacken', 'Blanch', 'Blend', 'Boil', 'Braise', 'Brew', 'Bring', 'Broil', 'Brown', 'Burn', 'Caramelize', 'Char', 
-             'Char-broil', 'Check', 'Chill', 'Churn', 'Clarify', 'Coddle', 'Confit', 'Congeal', 'Cook', 'Cool', 'Cream', 'Cure', 'Deep fry', 'Dehydrate', 'Dissolve', 
-             'Dough', 'Dry', 'Emulsify', 'Ferment', 'Filter', 'Fizz', 'Flambé', 'Foam', 'Freeze', 'French fry', 'Fricassee', 'Frost', 'Froth', 'Fry', 'Gel', 'Glaze', 
-             'Gratin', 'Grill', 'Grind', 'Hard boil', 'Harden', 'Heat', 'Hydrate', 'Ice', 'Infuse', 'Jell', 'Juice', 'Keep', 'Leaven', 'Macerate', 'Marinate', 'Melt', 
-             'Microwave', 'Mill', 'Oven fry', 'Overcook', 'Pan fry', 'Parboil', 'Parch', 'Percolate', 'Pickle', 'Poach', 'Pop', 'Popcorn', 'Precook', 'Preheat', 'Preserve', 
-             'Pressure-cook', 'Pressurize', 'Process', 'Puree', 'Raise', 'Raw', 'Reduce', 'Refrigerate', 'Reheat', 'Render', 'Rise', 'Roast', 'Sauté', 'Scald', 'Scallop', 
-             'Sear', 'Serve', 'Set', 'Set aside', 'Settle', 'Shirr', 'Simmer', 'Slow cook', 'Smoke', 'Soft boil', 'Souse', 'Spurt', 'Steam', 'Steep', 'Stew', 'Stir fry', 
-             'Thicken', 'Thin', 'Toast', 'Torch', 'Uncured', 'Vacuum seal', 'Warm', 'Zap', 'absorb', 'absorbed', 'activate', 'adjust', 'age', 'air', 'air-dry', 'allow', 
-             'bake', 'barbecue', 'bbq', 'be', 'become', 'bind', 'blacken', 'blanch', 'blind bake', 'blister', 'bloom', 'boil', 'braise', 'break down', 'brew', 'brine', 
-             'bring', 'bring to a boil', 'bring to boil', 'bring to boiling', 'bring to the boil', 'broil', 'brown', 'browned', 'browning', 'bubble', 'burn', 'calculate', 
-             'candy', 'caramelize', 'char', 'charbroil', 'chargrill', 'chill', 'choose', 'churn freeze', 'churn-freeze', 'churnfreeze', 'clarify', 'coddle', 'cold', 'come', 
-             'comes', 'complement', 'contains', 'continue', 'continue roasting', 'cook', 'cooked', 'cooking', 'cool', 'create', 'crisp', 'culture', 'cure', 'de-glaze', 
-             'decorate', 'decrease', 'deep fry', 'deep-fry', 'deflate', 'defrost', 'deglaze', 'dehydrate', 'determine', 'dilute', 'dissolve', 'draw', 'dry', 'dry fry', 
-             'dry roast', 'dry-fry', 'dry-roast', 'emulsify', 'enjoy', 'ensure', 'evaluate', 'evaporate', 'ferment', 'firm', 'flambe', 'flambé', 'flame', 'flavour', 
-             'float', 'follow', 'freeze', 'fried', 'froth', 'fry', 'glaze', 'go', 'gratinee', 'griddle', 'grill', 'hard boil', 'hard-boil', 'harden', 'heat', 
-             'heat through', 'heated', 'hold', 'hydrate', 'ignite', 'impart', 'increase', 'infuse', 'keep', 'keep cooking', 'keep warm', 'leave', 'let', 
-             'let cook', 'let cool', 'let it infuse', 'let rest', 'let rise', 'let sit', 'let soften', 'let stand', 'let the dashi drip through', 'light', 
-             'like', 'liquefy', 'liquidize', 'liquify', 'loosen', 'lower', 'maintain', 'marinade', 'marinate', 'mature', 'mellow', 'melt', 
-             'micro-cook', 'microwave', 'mind', 'model', 'moisten', 'nuke', 'observe', 'omit', 'operate', 'oven', 'overcook', 'pan broil', 'pan fry', 
-             'pan roast', 'pan sear', 'pan-broil', 'pan-fry', 'panfry', 'par boil', 'par-boil', 'par-cook', 'parbake', 'parboil', 'parcook', 'pickle', 
-             'poach', 'pre cook', 'pre heat', 'pre-bake', 'pre-cook', 'pre-heat', 'prebake', 'precook', 'preheat', 'prepare', 'preserve', 'preset', 
-             'pressure cook', 'proceed', 'program', 'proof', 'prove', 'provide', 'puff', 'pulled', 'raise', 're-fry', 're-heat', 're-hydrate', 're-melt', 
-             'reckon', 'reconstitute', 'recook', 'reduce', 'refreeze', 'refridgerate', 'refrigerate', 'refrigerated', 'refry', 'register', 'regulate', 'reheat', 'rehydrate', 
-             'relax', 'release', 'render', 'replenish', 'reserve', 'rest', 'restart', 'retain', 'retard', 'return', 'rewarm', 'ripen', 'rise', 'roast', 'saute', 'sauteed', 'sauté', 
-             'scald', 'sear', 'see', 'seep', 'set', 'settle', 'shallow fry', 'shallow-fry', 'shock', 'shrink', 'shut off', 'simmer', 'sink', 'sit', 'sizzle', 'skillet-fry', 'skip', 
-             'slow cook', 'slow roast', 'slow-roast', 'smoke', 'smother', 'soak', 'soaking', 'soften', 'solidify', 'sprout', 'stabilize', 'stand', 'start', 'steam', 'steam fry', 
-             'steam-bake', 'steam-cook', 'steam-fry', 'steep', 'sterilize', 'stew',  'stop', 'store', 'supervise', 'sweeten', 'temper', 'tender', 
-             'tenderize', 'thaw', 'thawing', 'thicken', 'thin', 'toast', 'transform', 'turn down', 'turn off', 'underbake', 'unknown', 'verify', 'wait', 'warm', 'whiten', 'wilt', 'zap']
-    
-    # Convertir en minuscules pour une comparaison insensible à la casse
-    cooking_verbs_no_gesture_lower = [verb.lower() for verb in cooking_verbs_no_gesture]
-
-    try:
-        # Convertir la chaîne en liste Python
-        if isinstance(actions_str, str):
-            actions_list = ast.literal_eval(actions_str)
-        else:
-            actions_list = actions_str
-        
-        # Filtrer les verbes en gardant seulement ceux qui ne sont PAS dans cooking_verbs_no_gesture
-        filtered_actions = [
-            action for action in actions_list 
-            if action.lower() not in cooking_verbs_no_gesture_lower
-        ]
-        
-        return filtered_actions
-    except:
-        # En cas d'erreur, retourner la valeur originale
-        return actions_str
 
 def remove_duplicates_with_lists(df):
     """
@@ -1793,175 +1738,7 @@ def remove_duplicates_with_lists(df):
 
 
 
-def normalise_verbs(liste_verbes):
-    """
-    Normalise une liste de verbes de cuisine en remplaçant les variantes
-    par leur forme générale.
-    
-    Args:
-        liste_verbes: Liste de verbes à normaliser
-        
-    Returns:
-        Liste de verbes normalisés
-    """
-    
-    # Dictionnaire de mapping : variante -> forme générale
-    mapping_verbes = {
-        # Mélanger/Combiner
-        'mixing': 'mix', 'mixed': 'mix',  'combine': 'mix',
-        'incorporate': 'mix', 'integrate': 'mix', 
-        'wisk': 'whisk', 'beating': 'beat',
-        
-        # Verser
-        'pour out': 'pour', 'pour off': 'pour', 
-        'stream': 'pour', 
-        
-        # Saupoudrer/Disperser
-        'sprink': 'sprinkle', 'dust': 'sprinkle', 'powder': 'sprinkle',
-        'scatter': 'sprinkle', 'shower': 'sprinkle', 'rain': 'sprinkle',
-        
-        # Placer/Positionner
-        'put': 'place', 'position': 'place', 'set': 'place', 
-        'lay': 'place', 'lay out': 'place',
-        
-        # Retirer/Enlever
-        'take out': 'remove', 'take off': 'remove', 'discard': 'remove',
-        'dispose': 'remove', 'eliminate': 'remove', 'get rid of': 'remove',
-        'throw away': 'remove', 'ditch': 'remove', 'discarding': 'remove',
-        
-        
-        # Écraser
-        'smash': 'mash', 'smashed': 'mash', 
 
-        # Râper/Déchiqueter
-        'shred': 'grate',
-        
-        # Enrober/Couvrir
-        'flour': 'sprinkle',
-        
-        # Aplatir
-        'flat': 'flatten', 'level': 'flatten', 'level off': 'flatten', 
-        'press': 'flatten',
-        
-        # Égaliser/Uniformiser
-        'even out': 'even',  
-        
-        # Envelopper
-        'wrapping': 'wrap', 'envelop': 'wrap', 'encase': 'wrap', 'enclose': 'wrap',
-        
-        # Rouler
-        'roll out': 'roll', 'roll up': 'roll',
-        
-        # Plier
-        'crease': 'fold',
-        
-        # Tourner/Retourner
-        'turn over': 'turn', 'turn out': 'turn', 
-        'invert': 'turn', 'reverse': 'turn',
-        
-        # Percer
-        'poke': 'pierce', 'poking': 'pierce', 'puncture': 'pierce', 
-         'prick': 'pierce',
-        
-       
-        # Réduire en purée
-        'purée': 'puree', 'liquidise': 'puree', 'process': 'puree',
-        
-        # Tamiser
-        'sieve': 'sift', 
-        
-        # Égoutter
-        'drained': 'drain',
-        
-        # Presser/Comprimer
-        'pressing': 'press',  'compress': 'press',
-        
-        # Tapoter
-        'pat dry': 'pat', 'patting': 'pat', 'tap': 'pat', 'dab': 'pat',
-        
-        # Badigeonner/Étaler
-        'coat': 'brush', 'slather': 'brush', 'smear': 'brush',
-        
-        # Garnir/Décorer
-        'garish': 'garnish', 'adorn': 'garnish',
-        
-        # Séparer
-        'divide': 'separate', 'split': 'separate',
-        
-        # Assembler
-        'build': 'assemble', 'construct': 'assemble',
-        
-        # Attacher/Fixer
-        'fasten': 'attach', 'secure': 'attach', 'fix': 'attach', 
-        'tie': 'attach', 
-        
-        # Secouer
-        'shaking': 'shake',
-        # Arroser
-        'baste': 'brush',
-        
-        # Vérifier/Examiner
-        'inspect': 'check', 'examine': 'check', 'test': 'check', 'assess': 'check',
-        
-        # Nettoyer
-        'cleanse': 'clean', 'wash': 'clean', 'rinse': 'clean', 
-        'rins': 'clean', 'scrub': 'clean',
-        
-        # Peler
-        'skin': 'peel', 'pare': 'peel',
-        
-        # Vider/Retirer les graines
-        'deseed': 'seed', 'de-seed': 'seed', 'pit': 'seed', 'core': 'seed',
-        
-        # Désosser
-        'debone': 'bone', 'de-bone': 'bone',
-        
-        # Servir/Présenter
-        'present': 'serve', 'plate': 'serve', 'dish': 'serve', 'dish up': 'serve',
-        
-        # Refaire/Répéter (préfixes re-)
-        're-add': 'add', 're-arrange': 'arrange', 'rearrange': 'arrange',
-        're-blend': 'blend', 're-coat': 'coat', 'recoat': 'coat',
-        're-cover': 'cover', 'recover': 'cover', 're-form': 'form',
-        'reform': 'form', 're-roll': 'roll', 'reroll': 'roll',
-        're-wrap': 'wrap', 'rewrap': 'wrap', 're-invert': 'invert',
-        'reinvert': 'invert', 'remold': 'mold', 'rewhisk': 'whisk',
-        'reprocess': 'process', 'redistribute': 'distribute',
-        'regrind': 'grind', 'refill': 'fill', 'reflour': 'flour',
-        'reseason': 'season', 'reshape': 'shape', 'restuff': 'stuff',
-        
-        # Ouvrir
-        'unwrap': 'open', 'uncover': 'open', 'unfold': 'open',
-        
-        # Fermer/Sceller
-        'close': 'seal', 'shut': 'seal',
-
-        'crumbled': 'crumble', 
-        
-        
-        # Autres variantes courantes
-        'tossed': 'toss',
-        'flakes': 'flake',
-        'sandwiched': 'sandwich',
-        'shelled': 'shell',
-        'piping': 'pipe',
-        'processing': 'process',
-    }
-
-    if isinstance(liste_verbes, str):
-        liste_verbe = ast.literal_eval(liste_verbe)
-    # Normalisation 
-    liste_normalisee = []
-    for verbe in liste_verbes:
-        verbe_lower = verbe.lower()
-        # Si le verbe est dans le mapping, utiliser la forme générale
-        if verbe_lower in mapping_verbes:
-            liste_normalisee.append(mapping_verbes[verbe_lower])
-        else:
-            # Sinon, garder le verbe original en minuscules
-            liste_normalisee.append(verbe_lower)
-    
-    return liste_normalisee
 
 def remove_consecutive_duplicates(lst):
 
@@ -2041,7 +1818,7 @@ def ensure_list_robust(x):
     return []
 
 
-def clean_actions_column(df):
+def convert_actions_column_elements(df):
     """
     Nettoyer complètement la colonne actions
     """
@@ -2080,45 +1857,6 @@ def clean_actions_column(df):
     
     return df
 
-def clean_action_list(actions, actions_to_remove, normalization_dict):
-    """
-    Nettoie une liste d'actions culinaires en appliquant les règles de suppression 
-    et de normalisation, tout en préservant l'ordre original.
-    
-    Parameters:
-    -----------
-    actions : list
-        Liste d'actions brutes à nettoyer (ordre préservé)
-    actions_to_remove : list
-        Liste des actions à supprimer complètement
-    normalization_dict : dict
-        Dictionnaire {variante: forme_normalisée} pour standardiser les actions
-        
-    Returns:
-    --------
-    list: Liste finale des actions nettoyées dans l'ordre original
-    """
-    # Convertir en set pour des recherches plus rapides
-    removal_set = set(actions_to_remove)
-    
-    # Nettoyer et normaliser en préservant l'ordre
-    cleaned_actions = []
-    
-    for action in actions:
-     
-        # Étape 2: Ignorer si à supprimer
-        if action in removal_set:
-            continue
-        
-           # Étape 1: Normaliser si nécessaire
-        if action in normalization_dict:
-            action = normalization_dict[action]
-        
-        
-        # Étape 3: Ajouter en préservant l'ordre
-        cleaned_actions.append(action)
-    
-    return cleaned_actions
 
 
 def data_preparation_3stages(subset):
@@ -2382,17 +2120,14 @@ def clean_dataframe_optimized(data, actions_to_remove, normalization_dict,
     return data_copy
 
 
-
-
-
-def data_cleaning_3stages(data):
+def data_cleaning_before_test(data, match_threshold=95):
     """
-    Nettoie et prétraite les données d'une cohorte
+    Nettoie et prétraite les données finaux 
     
     Parameters:
     -----------
-    subset : int or str
-        Numéro de la cohorte à traiter
+    pd.DataFrame :dataset final 
+       
     
     Returns:
     --------
@@ -2400,7 +2135,6 @@ def data_cleaning_3stages(data):
         final_df : DataFrame nettoyé avec gestes uniquement
         data_with_gesture : DataFrame nettoyé avec tous les verbes
     """
-
 
     final_df =  data.copy()
     if len(final_df) == 0:
@@ -2415,51 +2149,26 @@ def data_cleaning_3stages(data):
     with open('normalization_dict_final.json', 'r', encoding='utf-8') as f:
         normalization_dict = json.load(f)
     
-    # Post-traitement
     try:
 
 
 
-        # 1. Nettoyer la colonne actions
+        # 1. convertir la colonne actions en lists
         print("→ Nettoyage de la colonne actions...")
-        final_df = clean_actions_column(final_df)
+        final_df = convert_actions_column_elements(final_df)
         print(f"  ✓ Nettoyage terminé: {len(final_df):,} lignes")
         
         
-        # 2. netoyage et Normalisation des verbes (vectorisé si possible)
+        # 2. netoyage et Normalisation des verbes 
         print("→ Netoyage et Normalisation des verbes...")
         final_df = clean_dataframe_optimized(
         data= final_df,
         actions_to_remove=actions_to_remove,
         normalization_dict=normalization_dict,
-        similarity_threshold=95,  # Tu peux ajuster entre 85-95
+        similarity_threshold= match_threshold, 
         verbose=True
     )
-
-        final_df['actions'] = final_df['actions'].apply(normalise_verbs)
-        print(f"  ✓ Netoyage et Normalisation terminée")
-        
-        # 3. Créer une copie pour les données avec gestes
-        print("→ Création d'une copie pour data_with_non_gesture...")
-        data_with_non_gesture = final_df.copy()
-        print(f"  ✓ Copie créée: {len(data_with_non_gesture):,} lignes")
-        
-        # 4. Filtrer pour ne garder que les gestes (sur final_df uniquement)
-        print("→ Filtrage des gestes...")
-        final_df['actions'] = final_df['actions'].apply(filter_actions)
-        print(f"  ✓ Filtrage terminé")
-        
-        # 5. Supprimer les doublons consécutifs 
-        print("→ Suppression des doublons consécutifs...")
-        final_df['actions'] = final_df['actions'].apply(
-            lambda x: remove_consecutive_duplicates(x) if isinstance(x, (list, np.ndarray)) else x
-        )
-        data_with_non_gesture['actions'] = data_with_non_gesture['actions'].apply(
-            lambda x: remove_consecutive_duplicates(x) if isinstance(x, (list, np.ndarray)) else x
-        )
-        print(f"  ✓ Doublons consécutifs supprimés")
-        
-        # 6. Supprimer les doublons de listes d'actions identiques pour une même recette
+        # 3. Supprimer les doublons de listes d'actions identiques pour une même recette
         print("→ Suppression des doublons par ID...")
         
         # Pour final_df
@@ -2471,51 +2180,119 @@ def data_cleaning_3stages(data):
         final_df = final_df.drop(columns=['actions_tuple'])
         print(f"  ✓ final_df: {before_dedup - len(final_df):,} doublons supprimés ({len(final_df):,} restantes)")
         
-        # Pour data_with_non_gesture
-        data_with_non_gesture['actions_tuple'] = data_with_non_gesture['actions'].apply(
+        print(f"  ✓ Netoyage et Normalisation terminés")
+        
+        final_df.to_csv(DATA_DIR/'final_dataset_cleaned_and_normalized.csv', index=False)
+       
+        
+        return final_df
+    
+    except Exception as e:
+        print(f"\n❌ ERREUR lors du traitement de la cohorte : {e}")
+        import traceback
+        traceback.print_exc()
+        
+        # Retourner des DataFrames vides en cas d'erreur
+        return pd.DataFrame()
+    
+
+
+
+def data_cleaning_after_test(data):
+    """
+    Nettoie et prétraite les données d'une final en eliminant les non geste pour creer le dataset final de avec geste uniquement 
+    
+    Parameters:
+    -----------
+    pd.DataFrame :dataset final 
+       
+    
+    Returns:
+    --------
+    tuple of (pd.DataFrame, pd.DataFrame)
+        final_df : DataFrame nettoyé avec gestes uniquement
+        
+    """
+
+
+    final_df =  data.copy()
+    if len(final_df) == 0:
+        print(f"⚠️  DataFrame vide pour la cohorte {subset}")
+        return pd.DataFrame(), pd.DataFrame()
+    
+
+   
+ 
+    try:
+
+
+
+        # 1. Nettoyer la colonne actions
+        print("→ Nettoyage de la colonne actions...")
+        final_df = convert_actions_column_elements(final_df)
+        print(f"  ✓ Nettoyage terminé: {len(final_df):,} lignes")
+        
+        
+    
+        
+ 
+        # 2. Filtrer pour ne garder que les gestes (sur final_df uniquement)
+        print("→ Filtrage des gestes...")
+        final_df['actions'] = final_df['actions'].apply(filter_actions)
+        print(f"  ✓ Filtrage terminé")
+        
+        # 3. Supprimer les doublons consécutifs 
+        print("→ Suppression des doublons consécutifs...")
+        final_df['actions'] = final_df['actions'].apply(
+            lambda x: remove_consecutive_duplicates(x) if isinstance(x, (list, np.ndarray)) else x
+        )
+       
+        print(f"  ✓ Doublons consécutifs supprimés")
+        
+        # 4. Supprimer les doublons de listes d'actions identiques pour une même recette
+        print("→ Suppression des doublons par ID...")
+        
+        # Pour final_df
+        final_df['actions_tuple'] = final_df['actions'].apply(
             lambda x: tuple(x) if isinstance(x, (list, np.ndarray)) else x
         )
-        before_dedup_gesture = len(data_with_non_gesture)
-        data_with_non_gesture = data_with_non_gesture.drop_duplicates(subset=['id', 'actions_tuple'], keep='first')
-        data_with_non_gesture = data_with_non_gesture.drop(columns=['actions_tuple'])
-        print(f"  ✓ data_with_gesture: {before_dedup_gesture - len(data_with_non_gesture):,} doublons supprimés ({len(data_with_non_gesture):,} restantes)")
+        before_dedup = len(final_df)
+        final_df = final_df.drop_duplicates(subset=['id', 'actions_tuple'], keep='first')
+        final_df = final_df.drop(columns=['actions_tuple'])
+        print(f"  ✓ final_df: {before_dedup - len(final_df):,} doublons supprimés ({len(final_df):,} restantes)")
+        
+        
 
-
-        # 7. Supprimer les lignes avec des listes d'actions vides
+        # 5. Supprimer les lignes avec des listes d'actions vides
         print("→ Suppression des lignes avec actions vides...")
 
         before_empty = len(final_df)
         final_df = final_df[final_df['actions'].map(lambda x: len(x) > 0 if isinstance(x, (list, np.ndarray)) else False)]
         print(f"  ✓ final_df: {before_empty - len(final_df):,} lignes vides supprimées")
 
-        before_empty_gesture = len(data_with_non_gesture)
-        data_with_non_gesture = data_with_non_gesture[data_with_non_gesture['actions'].map(lambda x: len(x) > 0 if isinstance(x, (list, np.ndarray)) else False)]
-        print(f"  ✓ data_with_gesture: {before_empty_gesture - len(data_with_non_gesture):,} lignes vides supprimées")
+             
                 
-                
-        # 8. Trier par ID puis par type
+        # 6. Trier par ID puis par type
         print("→ Tri des données...")
         if 'type' in final_df.columns:
             final_df = final_df.sort_values(['id', 'type']).reset_index(drop=True)
-            data_with_non_gesture = data_with_non_gesture.sort_values(['id', 'type']).reset_index(drop=True)
+            
         else:
             final_df = final_df.sort_values('id').reset_index(drop=True)
-            data_with_non_gesture = data_with_non_gesture.sort_values('id').reset_index(drop=True)
+            
         print(f"  ✓ Tri terminé")
         
 
         print(f"final_df (gestes uniquement): {len(final_df):,} lignes")
-        print(f"data_with_gesture (tous verbes): {len(data_with_non_gesture):,} lignes")
-        
+       
         # S'assurer que ce sont bien des DataFrames
         assert isinstance(final_df, pd.DataFrame), "final_df n'est pas un DataFrame!"
-        assert isinstance(data_with_non_gesture, pd.DataFrame), "data_with_gesture n'est pas un DataFrame!"
-        
+       
 
-        final_df.to_csv('data/final_dataset_cleaned_without_non_gestures.csv', index=False)
-        data_with_non_gesture.to_csv('data/final_dataset_cleaned_with_non_gestures.csv', index=False)
+        final_df.to_csv(DATA_DIR/'final_dataset_cleaned_gestures_only.csv', index=False)
+       
         
-        return final_df, data_with_non_gesture
+        return final_df
         
     except Exception as e:
         print(f"\n❌ ERREUR lors du traitement de la cohorte : {e}")
@@ -2523,7 +2300,7 @@ def data_cleaning_3stages(data):
         traceback.print_exc()
         
         # Retourner des DataFrames vides en cas d'erreur
-        return pd.DataFrame(), pd.DataFrame()
+        return pd.DataFrame()
 
 
 
@@ -2653,8 +2430,8 @@ def process_files_smart(cohort_min=None, cohort_max=None, num_processes=None, ba
     print(f"  Cohortes traitées: {len(subset_list)}")
     print(f"{'='*60}\n")
 
-    combined_final.to_csv(DATA_DIR/'combined_results_dataset.csv', index=False)
-    combined_temporal.to_csv(DATA_DIR/'combined_results_dataset_temporal_variant.csv', index=False)
+    combined_final.to_csv(DATA_DIR/'combined_variants_results_dataset.csv', index=False)
+    combined_temporal.to_csv(DATA_DIR/'combined_variants_results_dataset_temporal_variant.csv', index=False)
     
     
     

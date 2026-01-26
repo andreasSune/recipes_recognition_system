@@ -1,3 +1,0 @@
-id,title,complexity,cuisine_type,len_manual,len_ancien,len_nouveau,man_anc_exact_match,man_anc_accuracy,man_anc_jaccard,man_anc_levenshtein,man_anc_lcs_ratio,man_anc_length_diff,man_nouv_exact_match,man_nouv_accuracy,man_nouv_jaccard,man_nouv_levenshtein,man_nouv_lcs_ratio,man_nouv_length_diff,anc_nouv_exact_match,anc_nouv_accuracy,anc_nouv_jaccard,anc_nouv_levenshtein,anc_nouv_lcs_ratio,anc_nouv_length_diff,change_category
-01019e8045,'V' Fruity red cabbage,SIMPLE,autre,5,5,9,True,1.0,1.0,0,1.0,0,False,0.0,0.0,9,0.0,4,False,0.0,0.0,9,0.0,4,regression
-003b7b356b,* Easy Simple Marinated Grilled Chicken. *,COMPLEXE,autre,7,7,16,True,1.0,1.0,0,1.0,0,False,0.0,0.0,16,0.0,9,False,0.0,0.0,16,0.0,9,regression
