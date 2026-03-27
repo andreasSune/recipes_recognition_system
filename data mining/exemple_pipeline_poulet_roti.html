@@ -1,0 +1,208 @@
+
+<style>
+.step-btn { cursor:pointer; padding:6px 14px; border-radius:20px; border:1.5px solid #2E6DA4; background:#fff; color:#1A3A5C; font-size:13px; font-weight:500; transition:background .15s,color .15s; }
+.step-btn.active { background:#2E6DA4; color:#fff; }
+.step-btn:hover:not(.active) { background:#EEF3FA; }
+.panel { display:none; }
+.panel.visible { display:block; }
+.tag { display:inline-block; padding:2px 10px; border-radius:12px; font-size:12px; font-weight:500; margin:2px; }
+.tag-blue { background:#EEF3FA; color:#1A3A5C; border:1px solid #2E6DA4; }
+.tag-green { background:#E8F5F1; color:#0F5C4A; border:1px solid #1A8C70; }
+.tag-amber { background:#FEF9EC; color:#7A4A00; border:1px solid #D4A017; }
+.tag-red { background:#FEF0EE; color:#7B241C; border:1px solid #C0392B; }
+.tag-gray { background:#F5F5F3; color:#444441; border:1px solid #B4B2A9; }
+.card { background:#fff; border:1px solid #DDD; border-radius:10px; padding:14px 18px; margin:10px 0; }
+.card-title { font-size:13px; font-weight:600; color:#1A3A5C; margin-bottom:6px; }
+.card-body { font-size:12px; color:#444; line-height:1.6; }
+.highlight { background:#FEF9EC; border-left:3px solid #D4A017; border-radius:0 6px 6px 0; padding:8px 12px; font-size:12px; color:#7A4A00; margin:8px 0; }
+.gesture-flow { display:flex; align-items:center; gap:4px; flex-wrap:wrap; margin:8px 0; }
+.gesture-node { padding:5px 11px; border-radius:16px; font-size:12px; font-weight:500; }
+.arr-small { color:#888; font-size:14px; }
+.progress-bar { height:6px; border-radius:3px; background:#EEF3FA; margin:8px 0 4px; }
+.progress-fill { height:6px; border-radius:3px; background:#2E6DA4; transition:width .4s; }
+.result-box { border-radius:8px; padding:12px 16px; margin:8px 0; }
+</style>
+
+<div style="background:#fff; padding:16px 0 8px;">
+
+  <div style="font-size:13px; color:#5F5E5A; margin-bottom:14px; padding:0 2px;">
+    Suivez le parcours d'un <strong style="color:#1A3A5C;">poulet rôti</strong> à travers tout le pipeline — cliquez sur chaque étape.
+  </div>
+
+  <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px;">
+    <button class="step-btn active" onclick="showStep(0)">① Dataset</button>
+    <button class="step-btn" onclick="showStep(1)">② FSM</button>
+    <button class="step-btn" onclick="showStep(2)">③ MBA · PrefixSpan</button>
+    <button class="step-btn" onclick="showStep(3)">④ Clustering</button>
+    <button class="step-btn" onclick="showStep(4)">⑤ GNN</button>
+    <button class="step-btn" onclick="showStep(5)">⑥ Reconnaissance</button>
+  </div>
+
+  <div id="panel-0" class="panel visible">
+    <div class="card">
+      <div class="card-title">Graphe de la recette : Poulet rôti</div>
+      <div class="card-body">La recette est stockée dans SQLite comme un graphe dirigé. Chaque nœud est un geste physique observable, chaque flèche est une transition.</div>
+      <div class="gesture-flow" style="margin-top:10px;">
+        <span class="gesture-node" style="background:#EEF3FA;color:#1A3A5C;">rincer</span>
+        <span class="arr-small">→</span>
+        <span class="gesture-node" style="background:#EEF3FA;color:#1A3A5C;">assaisonner</span>
+        <span class="arr-small">→</span>
+        <span class="gesture-node" style="background:#EEF3FA;color:#1A3A5C;">badigeonner</span>
+        <span class="arr-small">→</span>
+        <span class="gesture-node" style="background:#EEF3FA;color:#1A3A5C;">enfourner</span>
+        <span class="arr-small">→</span>
+        <span class="gesture-node" style="background:#EEF3FA;color:#1A3A5C;">arroser</span>
+        <span class="arr-small">→</span>
+        <span class="gesture-node" style="background:#EEF3FA;color:#1A3A5C;">découper</span>
+      </div>
+      <div class="highlight">Parmi +1 million de recettes dans la base · Type : FOUR · Famille : POULET</div>
+    </div>
+  </div>
+
+  <div id="panel-1" class="panel">
+    <div class="card">
+      <div class="card-title">FSM — Patterns fréquents détectés dans le graphe</div>
+      <div class="card-body">Le FSM parcourt le graphe et identifie les sous-séquences qui reviennent dans au moins 5% des recettes du corpus.</div>
+      <div style="margin-top:10px;">
+        <div style="font-size:12px;color:#444;margin-bottom:6px;">Patterns trouvés dans le poulet rôti :</div>
+        <div style="margin:4px 0;"><span class="tag tag-blue">assaisonner → enfourner</span> <span style="font-size:11px;color:#888;">support 34%</span></div>
+        <div style="margin:4px 0;"><span class="tag tag-blue">badigeonner → enfourner</span> <span style="font-size:11px;color:#888;">support 28%</span></div>
+        <div style="margin:4px 0;"><span class="tag tag-blue">enfourner → arroser</span> <span style="font-size:11px;color:#888;">support 21%</span></div>
+        <div style="margin:4px 0;"><span class="tag tag-gray">rincer → assaisonner</span> <span style="font-size:11px;color:#888;">support 8%</span></div>
+      </div>
+      <div class="highlight">Ces patterns deviennent les <strong>features initiales du vecteur binaire</strong> qui représente la recette pour le GNN.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Vecteur binaire résultant</div>
+      <div class="card-body" style="font-family:monospace;font-size:12px;color:#1A3A5C;">
+        [ 1, 1, 1, 0, 1, 0, 0, 1, 0, ... ]<br>
+        <span style="color:#888;font-family:sans-serif;font-size:11px;">1 = pattern présent dans la recette · 0 = absent</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="panel-2" class="panel">
+    <div class="card">
+      <div class="card-title">MBA · Apriori — Co-occurrences de gestes</div>
+      <div class="card-body">Quels gestes du poulet rôti apparaissent souvent ensemble dans le corpus ?</div>
+      <div style="margin-top:8px;">
+        <div style="margin:4px 0;"><span class="tag tag-green">{badigeonner, assaisonner}</span> <span style="font-size:11px;color:#888;">→ {enfourner} · lift 3.2</span></div>
+        <div style="margin:4px 0;"><span class="tag tag-green">{rincer}</span> <span style="font-size:11px;color:#888;">→ {assaisonner} · lift 2.8</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">PrefixSpan — Gestes déclencheurs identifiés</div>
+      <div class="card-body">Si le capteur observe <strong style="color:#0F5C4A;">badigeonner</strong> comme premier geste, quelle est la suite la plus probable ?</div>
+      <div class="gesture-flow" style="margin-top:8px;">
+        <span class="gesture-node" style="background:#D4EFDF;color:#0F5C4A;border:2px solid #1A8C70;">badigeonner</span>
+        <span class="arr-small">→</span>
+        <span class="gesture-node" style="background:#E8F5F1;color:#0F5C4A;">enfourner</span>
+        <span class="arr-small">→</span>
+        <span class="gesture-node" style="background:#E8F5F1;color:#0F5C4A;">arroser</span>
+      </div>
+      <div class="highlight"><strong>badigeonner</strong> est un geste déclencheur fort pour les recettes de type FOUR · POULET (lift 4.1). Dès qu'il est observé, 80% des recettes non-volailles sont éliminées immédiatement.</div>
+    </div>
+  </div>
+
+  <div id="panel-3" class="panel">
+    <div class="card">
+      <div class="card-title">Clustering — À quel groupe appartient le poulet rôti ?</div>
+      <div class="card-body">K-Means appliqué sur les vecteurs FSM regroupe les recettes en familles naturelles. Le poulet rôti tombe dans :</div>
+      <div style="margin:12px 0 4px;">
+        <div style="font-size:12px;color:#444;margin-bottom:4px;">Cluster 7 — Viandes au four</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:82%;"></div></div>
+        <div style="font-size:11px;color:#888;">82% de similarité avec le centre du cluster</div>
+      </div>
+      <div style="margin-top:10px;font-size:12px;color:#444;">Recettes voisines dans le même cluster :</div>
+      <div style="margin-top:6px;">
+        <span class="tag tag-amber">agneau rôti</span>
+        <span class="tag tag-amber">poulet en cocotte</span>
+        <span class="tag tag-amber">canard à l'orange</span>
+        <span class="tag tag-amber">rôti de porc</span>
+      </div>
+      <div class="highlight">Le GNN n'aura plus à distinguer 1M de recettes — seulement les ~400 recettes du cluster 7. Espace réduit d'un facteur 2500.</div>
+    </div>
+  </div>
+
+  <div id="panel-4" class="panel">
+    <div class="card">
+      <div class="card-title">GNN — Apprentissage de l'embedding du poulet rôti</div>
+      <div class="card-body">Le GNN reçoit le graphe de la recette. Chaque nœud passe par 2 couches de message passing.</div>
+      <div style="margin:10px 0 4px;font-size:12px;color:#444;">Couche 1 — chaque geste intègre ses voisins directs :</div>
+      <div class="gesture-flow">
+        <span class="gesture-node" style="background:#FEF0EE;color:#7B241C;">assaisonner</span>
+        <span style="font-size:11px;color:#888;">apprend que ses voisins sont rincer et badigeonner</span>
+      </div>
+      <div style="margin:10px 0 4px;font-size:12px;color:#444;">Couche 2 — contexte élargi :</div>
+      <div class="gesture-flow">
+        <span class="gesture-node" style="background:#FEF0EE;color:#7B241C;">assaisonner</span>
+        <span style="font-size:11px;color:#888;">sait maintenant qu'il mène à enfourner puis arroser</span>
+      </div>
+      <div style="margin-top:10px;font-size:12px;color:#444;">Readout — vecteur final du graphe :</div>
+      <div style="font-family:monospace;font-size:12px;color:#1A3A5C;background:#EEF3FA;padding:8px 12px;border-radius:6px;margin-top:4px;">
+        embedding = [ 0.82, -0.31, 0.55, 0.19, -0.74, ... ]<br>
+        <span style="font-family:sans-serif;font-size:11px;color:#888;">vecteur de 128 dimensions représentant toute la recette</span>
+      </div>
+      <div class="highlight">Les recettes du cluster 7 partageant les mêmes patterns FSM sont <strong>proches dans l'espace latent</strong> — c'est la validation sans étiquettes.</div>
+    </div>
+  </div>
+
+  <div id="panel-5" class="panel">
+    <div class="card">
+      <div class="card-title">Reconnaissance en temps réel — scénario capteur</div>
+      <div class="card-body">Une personne cuisine. Le capteur observe les gestes un par un.</div>
+      <div style="margin:10px 0;">
+        <div style="font-size:12px;font-weight:600;color:#444;margin-bottom:8px;">Geste 1 observé :</div>
+        <span class="gesture-node" style="background:#D4EFDF;color:#0F5C4A;border:2px solid #1A8C70;">badigeonner</span>
+        <div style="margin-top:8px;font-size:12px;color:#444;">PrefixSpan filtre immédiatement :</div>
+        <div style="margin:4px 0;"><span class="tag tag-red">— 820 000 recettes éliminées</span> <span style="font-size:11px;color:#888;">(non-volailles, non-four)</span></div>
+        <div style="margin:4px 0;"><span class="tag tag-green">180 000 candidates restantes</span></div>
+      </div>
+      <div style="margin:10px 0;">
+        <div style="font-size:12px;font-weight:600;color:#444;margin-bottom:8px;">Geste 2 observé :</div>
+        <span class="gesture-node" style="background:#D4EFDF;color:#0F5C4A;border:2px solid #1A8C70;">assaisonner</span>
+        <div style="margin-top:8px;font-size:12px;color:#444;">Le cluster 7 est identifié :</div>
+        <div style="margin:4px 0;"><span class="tag tag-green">Cluster 7 · Viandes au four — 400 recettes</span></div>
+      </div>
+      <div style="margin:10px 0;">
+        <div style="font-size:12px;font-weight:600;color:#444;margin-bottom:8px;">GNN — recherche fine dans le cluster :</div>
+        <div class="result-box" style="background:#D4EFDF;border:1.5px solid #27AE60;">
+          <div style="font-size:13px;font-weight:600;color:#1A6B35;">Recette reconnue : Poulet rôti</div>
+          <div style="font-size:12px;color:#0F5C4A;margin-top:4px;">Confiance : 94% · Temps de réponse : ~120ms</div>
+        </div>
+        <div class="result-box" style="background:#FEF9EC;border:1px solid #D4A017;margin-top:6px;">
+          <div style="font-size:12px;color:#7A4A00;">Prochaine étape suggérée à la personne :</div>
+          <div style="font-size:12px;font-weight:600;color:#7A4A00;margin-top:2px;">"N'oubliez pas d'arroser le poulet dans 20 minutes"</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;margin-top:14px;">
+    <button class="step-btn" id="btn-prev" onclick="navigate(-1)" style="opacity:0.4;" disabled>← Précédent</button>
+    <span id="step-label" style="font-size:12px;color:#888;align-self:center;">Étape 1 / 6</span>
+    <button class="step-btn" id="btn-next" onclick="navigate(1)">Suivant →</button>
+  </div>
+
+</div>
+
+<script>
+var cur = 0;
+var total = 6;
+function showStep(n) {
+  document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('visible'); });
+  document.querySelectorAll('.step-btn').forEach(function(b,i){ b.classList.toggle('active', i===n); });
+  document.getElementById('panel-'+n).classList.add('visible');
+  document.getElementById('step-label').textContent = 'Étape '+(n+1)+' / '+total;
+  document.getElementById('btn-prev').disabled = n===0;
+  document.getElementById('btn-prev').style.opacity = n===0 ? '0.4' : '1';
+  document.getElementById('btn-next').disabled = n===total-1;
+  document.getElementById('btn-next').style.opacity = n===total-1 ? '0.4' : '1';
+  cur = n;
+}
+function navigate(dir) {
+  var next = cur + dir;
+  if(next >= 0 && next < total) showStep(next);
+}
+showStep(0);
+</script>
